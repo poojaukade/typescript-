@@ -41,48 +41,52 @@ function RecipeApp() {
 
   const { data, loading, error } = useFetch<MealDBResponse>(url);
 
-  return (
-    <section className="recipe-app">
-      <h2>Recipe Finder</h2>
+  
+return (
+  <section className="w-full mt-10 p-[30px] bg-white border border-[#e5e7eb] rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.05)] max-[600px]:px-[15px] max-[600px]:py-5">
+    <h2 className="m-0 mb-2 text-[#222222] text-[28px] text-center max-[600px]:text-[23px]">
+      Recipe Finder
+    </h2>
 
-      <RecipeSearch
-        onSearch={handleSearch}
-        initialValue={searchTerm}
+    <RecipeSearch
+      onSearch={handleSearch}
+      initialValue={searchTerm}
+    />
+
+    {loading && (
+      <p className="my-5 text-center text-[15px] text-[#555555]">
+        Loading recipes...
+      </p>
+    )}
+
+    {error && (
+      <p className="my-5 text-center text-[15px] text-[#dc2626]">
+        Error: {error}
+      </p>
+    )}
+
+    {selectedRecipeId ? (
+      <RecipeDetails
+        recipeId={selectedRecipeId}
+        onClose={handleCloseDetails}
       />
-
-      {loading && (
-        <p className="recipe-message recipe-loading">
-          Loading recipes...
-        </p>
-      )}
-
-      {error && (
-        <p className="recipe-message recipe-error">
-          Error: {error}
-        </p>
-      )}
-
-      {selectedRecipeId ? (
-        <RecipeDetails
-          recipeId={selectedRecipeId}
-          onClose={handleCloseDetails}
+    ) : (
+      data?.meals && (
+        <RecipeList
+          recipes={data.meals}
+          onViewDetails={handleViewDetails}
         />
-      ) : (
-        data?.meals && (
-          <RecipeList
-            recipes={data.meals}
-            onViewDetails={handleViewDetails}
-          />
-        )
-      )}
+      )
+    )}
 
-      {data && data.meals === null && (
-        <p className="recipe-message recipe-empty">
-          No recipes found. Try another search.
-        </p>
-      )}
-    </section>
-  );
+    {data && data.meals === null && (
+      <p className="my-5 text-center text-[15px] text-[#777777]">
+        No recipes found. Try another search.
+      </p>
+    )}
+  </section>
+);
+
 }
 
 export default RecipeApp;

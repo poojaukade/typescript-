@@ -20,7 +20,7 @@ type RecipeListProps = {
 
 function RecipeList({ recipes, onViewDetails }: RecipeListProps) {
   return (
-    <div className="recipe-results">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-5 mt-[25px] max-[600px]:grid-cols-1">
       {recipes.map((recipe) => (
         <RecipeCard
           key={recipe.idMeal}
@@ -31,5 +31,6 @@ function RecipeList({ recipes, onViewDetails }: RecipeListProps) {
     </div>
   );
 }
+
 
 export default RecipeList;

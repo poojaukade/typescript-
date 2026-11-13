@@ -84,10 +84,14 @@ function App() {
   );
 
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div  className={`min-h-screen transition-colors duration-200 ${
+    darkMode
+      ? "dark bg-[#101827] text-[#f1f5f9]"
+      : "bg-[#f4f6fa] text-[#172b4d]"
+  }`}>
       <Header />
 
-      <main className="container">
+      <main className="w-[calc(100%-32px)] max-w-[1000px] mx-auto my-[35px] max-[650px]:my-5">
         <StatePlayground
           darkMode={darkMode}
           onToggleTheme={() => setDarkMode((previous) => !previous)}
