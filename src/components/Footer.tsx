@@ -1,4 +1,3 @@
-
 type FooterProps = {
   totalTasks: number;
   remainingTasks: number;
@@ -6,10 +5,17 @@ type FooterProps = {
 
 function Footer({ totalTasks, remainingTasks }: FooterProps) {
   return (
-    <footer className="footer">
-      <p>
-        You have completed {totalTasks - remainingTasks} out of{" "}
-        {totalTasks} tasks.
+    <footer className="mt-6 border-t border-gray-300 px-4 py-4 text-center">
+      <p className="text-sm text-gray-600">
+        You have completed{" "}
+        <span className="font-semibold text-green-600">
+          {totalTasks - remainingTasks}
+        </span>{" "}
+        out of{" "}
+        <span className="font-semibold text-gray-900">
+          {totalTasks}
+        </span>{" "}
+        tasks.
       </p>
     </footer>
   );

@@ -18,7 +18,7 @@ type TaskListProps = {
 
 function TaskList({ tasks, onToggle, onDelete, onEdit }: TaskListProps) {
   if (tasks.length === 0) {
-    return <p className="empty-message">No tasks found.</p>;
+    return <p className="py-[25px] text-center text-[#64748b]">No tasks found.</p>;
   }
 
   return (

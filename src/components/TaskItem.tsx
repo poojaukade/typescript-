@@ -25,39 +25,46 @@ function TaskItem({ task, onToggle, onDelete, onEdit }: TaskItemProps) {
     onEdit(task.id, trimmedTitle);
   }
 
-  return (
-    <div className="task-item">
-      <label className="task-label">
-        <input
-          type="checkbox"
-          checked={task.completed}
-          onChange={() => onToggle(task.id)}
-        />
+  
+return (
+  <div className="flex items-center justify-between gap-3 px-1 py-[15px] border-b border-[#e2e8f0] dark:border-[#475569]">
 
-        <span className={task.completed ? "completed" : ""}>
-          {task.title}
-        </span>
-      </label>
+    <label className="flex items-center gap-[10px] min-w-0 cursor-pointer">
+      <input
+        type="checkbox"
+        className="!w-[17px] !h-[17px] !p-0 shrink-0 accent-[#2563eb]"
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
+      />
 
-      <div className="task-actions">
-        <button
-          type="button"
-          className="edit-button"
-          onClick={handleEdit}
-        >
-          Edit
-        </button>
+      <span
+        className={`[overflow-wrap:anywhere] ${
+          task.completed ? "line-through text-[#94a3b8]" : ""
+        }`}
+      >
+        {task.title}
+      </span>
+    </label>
 
-        <button
-          type="button"
-          className="delete-button"
-          onClick={() => onDelete(task.id)}
-        >
-          Delete
-        </button>
-      </div>
+    <div className="flex gap-[7px] shrink-0 max-[650px]:flex-col">
+      <button
+        type="button"
+        className="bg-transparent border border-[#cbd5e1] rounded-[6px] px-[9px] py-[6px] text-[12px] dark:text-[#e2e8f0] dark:border-[#64748b]"
+        onClick={handleEdit}
+      >
+        Edit
+      </button>
+
+      <button
+        type="button"
+        className="bg-transparent border border-[#cbd5e1] rounded-[6px] px-[9px] py-[6px] text-[12px] text-[#dc2626]"
+        onClick={() => onDelete(task.id)}
+      >
+        Delete
+      </button>
     </div>
-  );
+  </div>
+);
 }
 
 export default TaskItem;
