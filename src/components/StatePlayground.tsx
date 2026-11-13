@@ -67,26 +67,39 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
   }
 
   return (
-    <section className="playground">
+    <section
+  className={`mb-[25px] rounded-[14px] p-[26px] shadow-[0_4px_18px_rgba(15,23,42,0.05)] ${
+    darkMode
+      ? "bg-[#1e293b] text-[#f1f5f9]"
+      : "bg-white text-[#172b4d]"
+  }`}
+>
       <div className="section-heading">
         <div>
-          <h2>State Playground</h2>
-          <p className="section-description">
+          <h2 className="text-[21px] mb-[8px]">State Playground</h2>
+          <p className="text-[#64748b] text-[14px] mb-[22px] leading-[1.5]">
             Practise React state with interactive examples.
           </p>
         </div>
       </div>
 
-      <div className="playground-grid">
+      <div className="grid grid-cols-2 gap-4 max-[650px]:grid-cols-1">
         {/* Counter */}
-        <div className="play-card">
-          <h3>Counter</h3>
+       <div
+  className={`border rounded-[10px] p-[18px] ${
+    darkMode
+      ? "border-[#475569]"
+      : "border-[#e2e8f0]"
+  }`}
+>
+          <h3 className="text-[16px] mb-[15px]">Counter</h3>
 
-          <div className="counter-value">{count}</div>
+          <div className="text-[35px] font-bold mb-[15px]">{count}</div>
 
-          <div className="button-group">
+          <div className="flex flex-wrap gap-[7px]">
             <button
               type="button"
+               className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
               onClick={() => setCount((prev) => (prev === 0 ? 0 : prev - 1))}
             >
               −
@@ -94,69 +107,101 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
             <button
               type="button"
+               className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
               onClick={() => setCount((prev) => prev + 1)}
             >
               +
             </button>
 
-            <button type="button" onClick={() => setCount(0)}>
+            <button 
+            type="button"
+             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+            onClick={() => setCount(0)}>
               Reset
             </button>
           </div>
         </div>
 
         {/* Show / Hide */}
-        <div className="play-card">
-          <h3>Show / Hide</h3>
+         <div
+  className={`border rounded-[10px] p-[18px] ${
+    darkMode
+      ? "border-[#475569]"
+      : "border-[#e2e8f0]"
+  }`}
+>
+          <h3 className="text-[16px] mb-[15px]">Show / Hide</h3>
 
           <button
             type="button"
+             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
             onClick={() => setShowMessage((prev) => !prev)}
           >
             {showMessage ? "Hide Message" : "Show Message"}
           </button>
 
           {showMessage && (
-            <p className="success-message">
+            <p className="text-[#15803d] text-[13px] mt-[10px]">
               React state controls this message!
             </p>
           )}
         </div>
 
         {/* Theme */}
-        <div className="play-card">
-          <h3>Theme Switch</h3>
+        <div
+  className={`border rounded-[10px] p-[18px] ${
+    darkMode
+      ? "border-[#475569]"
+      : "border-[#e2e8f0]"
+  }`}
+>
+          <h3 className="text-[16px] mb-[15px]">Theme Switch</h3>
 
           <p>{darkMode ? "Dark Mode" : "Light Mode"}</p>
 
-          <button type="button" onClick={onToggleTheme}>
+          <button 
+          type="button" 
+           className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+          onClick={onToggleTheme}>
             Switch Theme
           </button>
         </div>
 
         {/* Array state */}
-        <div className="play-card array-card">
-          <h3>Array State Practice</h3>
+         <div
+  className={`border rounded-[10px] p-[18px] ${
+    darkMode
+      ? "border-[#475569]"
+      : "border-[#e2e8f0]"
+  }`}
+>
+          <h3 className="text-[16px] mb-[15px]">Array State Practice</h3>
 
-          <div className="array-input">
+          <div className="flex gap-2 mb-3">
             <input
+             className="min-w-0 flex-1"
               value={newItem}
               onChange={handleInputChange}
               placeholder="Enter an item"
             />
 
-            <button type="button" onClick={handleAddItem}>
+            <button 
+            type="button" 
+             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+            onClick={handleAddItem}>
               Add
             </button>
           </div>
 
           {items.map((item) => (
-            <div className="array-item" key={item.id}>
+            <div className="flex items-center justify-between gap-[10px] border-t border-[#e2e8f0] py-[10px] text-sm"
+             key={item.id}>
               <span>{item.name}</span>
 
-              <div className="button-group">
+              <div className="flex flex-wrap gap-[7px]">
                 <button
                   type="button"
+                  className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
                   onClick={() => handleEditItem(item.id)}
                 >
                   Edit
@@ -164,6 +209,7 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
                 <button
                   type="button"
+                  className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
                   onClick={() => handleDeleteItem(item.id)}
                 >
                   Delete
