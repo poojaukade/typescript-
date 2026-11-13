@@ -93,26 +93,52 @@ function App() {
           onToggleTheme={() => setDarkMode((previous) => !previous)}
         />
 
-        <section className="dashboard">
-          <h2>My Task Manager</h2>
-          <p className="section-description">
+        <section
+          className={`mb-[25px] rounded-[14px] p-[26px] shadow-[0_4px_18px_rgba(15,23,42,0.05)] ${darkMode
+              ? "bg-[#1e293b] text-[#f1f5f9]"
+              : "bg-white text-[#172b4d]"
+            }`}
+        >
+          <h2 className="text-[21px] mb-[8px]">My Task Manager</h2>
+          <p
+            className={`text-[14px] mb-[22px] leading-[1.5] ${darkMode ? "text-[#cbd5e1]" : "text-[#64748b]"
+              }`}
+          >
             Organise your work and track your progress.
           </p>
 
-          <div className="stats">
-            <div className="stat-card">
-              <span>Total Tasks</span>
-              <h3>{totalTasks}</h3>
+          <div className="grid grid-cols-3 gap-[14px] mb-[22px]">
+            <div
+              className={`rounded-[10px] p-[17px] max-[650px]:p-3 ${darkMode ? "bg-[#334155]" : "bg-[#f1f5f9]"
+                }`}
+            >
+              <span
+                className={`text-[13px] ${darkMode ? "text-[#cbd5e1]" : "text-[#64748b]"
+                  }`}
+              >Total Tasks</span>
+              <h3 className="text-[28px] mt-2 max-[650px]:text-[23px]">{totalTasks}</h3>
             </div>
 
-            <div className="stat-card">
-              <span>Completed</span>
-              <h3>{completedTasks}</h3>
+            <div
+              className={`rounded-[10px] p-[17px] max-[650px]:p-3 ${darkMode ? "bg-[#334155]" : "bg-[#f1f5f9]"
+                }`}
+            >
+              <span
+                className={`text-[13px] ${darkMode ? "text-[#cbd5e1]" : "text-[#64748b]"
+                  }`}
+              >Completed</span>
+              <h3 className="text-[28px] mt-2 max-[650px]:text-[23px]">{completedTasks}</h3>
             </div>
 
-            <div className="stat-card">
-              <span>Remaining</span>
-              <h3>{remainingTasks}</h3>
+            <div
+              className={`rounded-[10px] p-[17px] max-[650px]:p-3 ${darkMode ? "bg-[#334155]" : "bg-[#f1f5f9]"
+                }`}
+            >
+              <span
+                className={`text-[13px] ${darkMode ? "text-[#cbd5e1]" : "text-[#64748b]"
+                  }`}
+              >Remaining</span>
+              <h3 className="text-[28px] mt-2 max-[650px]:text-[23px]">{remainingTasks}</h3>
             </div>
           </div>
 
