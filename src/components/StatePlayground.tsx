@@ -3,6 +3,8 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import Button from "./ui/button";
 import Input from "./ui/Input";
+import Modal from "./ui/Modal";
+
 // Component props
 type StatePlaygroundProps = {
   darkMode: boolean;
@@ -26,6 +28,10 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
   const [newItem, setNewItem] = useState<string>("");
 
+  // Modal state
+  const [editingItem, setEditingItem] = useState<Item | null>(null);
+  const [editedItemName, setEditedItemName] = useState<string>("");
+
   // Add item using spread
   function handleAddItem(): void {
     const trimmedItem = newItem.trim();
@@ -48,19 +54,37 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
     );
   }
 
-  // Edit item using map and object spread
+  // Edit item using Modal
   function handleEditItem(itemId: number): void {
-    const newName = window.prompt("Enter updated item name:");
+    const selectedItem = items.find((item) => item.id === itemId);
 
-    if (newName === null || !newName.trim()) return;
+    if (!selectedItem) return;
+
+    setEditingItem(selectedItem);
+    setEditedItemName(selectedItem.name);
+  }
+
+  // Close Modal
+  function handleClose(): void {
+    setEditingItem(null);
+    setEditedItemName("");
+  }
+
+  // Save edited item
+  function handleSave(): void {
+    const trimmedName = editedItemName.trim();
+
+    if (!trimmedName || !editingItem) return;
 
     setItems((previousItems) =>
       previousItems.map((item) =>
-        item.id === itemId
-          ? { ...item, name: newName.trim() }
+        item.id === editingItem.id
+          ? { ...item, name: trimmedName }
           : item
       )
     );
+
+    handleClose();
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -69,12 +93,12 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
   return (
     <section
-  className={`mb-[25px] rounded-[14px] p-[26px] shadow-[0_4px_18px_rgba(15,23,42,0.05)] ${
-    darkMode
-      ? "bg-[#1e293b] text-[#f1f5f9]"
-      : "bg-white text-[#172b4d]"
-  }`}
->
+      className={`mb-[25px] rounded-[14px] p-[26px] shadow-[0_4px_18px_rgba(15,23,42,0.05)] ${
+        darkMode
+          ? "bg-[#1e293b] text-[#f1f5f9]"
+          : "bg-white text-[#172b4d]"
+      }`}
+    >
       <div className="section-heading">
         <div>
           <h2 className="text-[21px] mb-[8px]">State Playground</h2>
@@ -86,13 +110,13 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
       <div className="grid grid-cols-2 gap-4 max-[650px]:grid-cols-1">
         {/* Counter */}
-       <div
-  className={`border rounded-[10px] p-[18px] ${
-    darkMode
-      ? "border-[#475569]"
-      : "border-[#e2e8f0]"
-  }`}
->
+        <div
+          className={`border rounded-[10px] p-[18px] ${
+            darkMode
+              ? "border-[#475569]"
+              : "border-[#e2e8f0]"
+          }`}
+        >
           <h3 className="text-[16px] mb-[15px]">Counter</h3>
 
           <div className="text-[35px] font-bold mb-[15px]">{count}</div>
@@ -100,7 +124,7 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
           <div className="flex flex-wrap gap-[7px]">
             <button
               type="button"
-               className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+              className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
               onClick={() => setCount((prev) => (prev === 0 ? 0 : prev - 1))}
             >
               −
@@ -108,34 +132,35 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
             <button
               type="button"
-               className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+              className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
               onClick={() => setCount((prev) => prev + 1)}
             >
               +
             </button>
 
-            <button 
-            type="button"
-             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
-            onClick={() => setCount(0)}>
+            <button
+              type="button"
+              className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+              onClick={() => setCount(0)}
+            >
               Reset
             </button>
           </div>
         </div>
 
         {/* Show / Hide */}
-         <div
-  className={`border rounded-[10px] p-[18px] ${
-    darkMode
-      ? "border-[#475569]"
-      : "border-[#e2e8f0]"
-  }`}
->
+        <div
+          className={`border rounded-[10px] p-[18px] ${
+            darkMode
+              ? "border-[#475569]"
+              : "border-[#e2e8f0]"
+          }`}
+        >
           <h3 className="text-[16px] mb-[15px]">Show / Hide</h3>
 
           <button
             type="button"
-             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+            className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
             onClick={() => setShowMessage((prev) => !prev)}
           >
             {showMessage ? "Hide Message" : "Show Message"}
@@ -150,84 +175,114 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 
         {/* Theme */}
         <div
-  className={`border rounded-[10px] p-[18px] ${
-    darkMode
-      ? "border-[#475569]"
-      : "border-[#e2e8f0]"
-  }`}
->
+          className={`border rounded-[10px] p-[18px] ${
+            darkMode
+              ? "border-[#475569]"
+              : "border-[#e2e8f0]"
+          }`}
+        >
           <h3 className="text-[16px] mb-[15px]">Theme Switch</h3>
 
           <p>{darkMode ? "Dark Mode" : "Light Mode"}</p>
 
-          <button 
-          type="button" 
-           className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
-          onClick={onToggleTheme}>
+          <button
+            type="button"
+            className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+            onClick={onToggleTheme}
+          >
             Switch Theme
           </button>
         </div>
 
         {/* Array state */}
-         <div
-  className={`border rounded-[10px] p-[18px] ${
-    darkMode
-      ? "border-[#475569]"
-      : "border-[#e2e8f0]"
-  }`}
->
+        <div
+          className={`border rounded-[10px] p-[18px] ${
+            darkMode
+              ? "border-[#475569]"
+              : "border-[#e2e8f0]"
+          }`}
+        >
           <h3 className="text-[16px] mb-[15px]">Array State Practice</h3>
 
-       <div className="flex gap-3 mb-3 items-end">
-  <Input
-    id="new-item"
-    label="New Item"
-    value={newItem}
-    onChange={handleInputChange}
-    placeholder="Enter item name"
-  />
+          <div className="flex gap-3 mb-3 items-end">
+            <Input
+              id="new-item"
+              label="New Item"
+              value={newItem}
+              onChange={handleInputChange}
+              placeholder="Enter item name"
+            />
 
-  <Button
-    variant="primary"
-    size="medium"
-    className="shrink-0 self-end"
-    onClick={handleAddItem}
-  >
-    Add
-  </Button>
-</div>
+            <Button
+              variant="primary"
+              size="medium"
+              className="shrink-0 self-end"
+              onClick={handleAddItem}
+            >
+              Add
+            </Button>
+          </div>
 
           {items.map((item) => (
-            <div className="flex items-center justify-between gap-[10px] border-t border-[#e2e8f0] py-[10px] text-sm"
-             key={item.id}>
+            <div
+              className="flex items-center justify-between gap-[10px] border-t border-[#e2e8f0] py-[10px] text-sm"
+              key={item.id}
+            >
               <span>{item.name}</span>
 
               <div className="flex flex-wrap gap-[7px]">
-                {/* <button
-                  type="button"
-                  className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
+                <Button
+                  variant="primary"
+                  size="small"
                   onClick={() => handleEditItem(item.id)}
                 >
                   Edit
-                </button> */}
-                 <Button
-          variant="primary"
-          size="small"
-          onClick={() => handleEditItem(item.id)}
-        >
-          Edit
-        </Button>
+                </Button>
 
                 <Button
-          variant="primary"
-          size="small"
-          onClick={() => handleDeleteItem(item.id)}
-        >
-          Delete
-        </Button>
+                  variant="primary"
+                  size="small"
+                  onClick={() => handleDeleteItem(item.id)}
+                >
+                  Delete
+                </Button>
               </div>
             </div>
           ))}
+
+          {/* Edit Item Modal */}
+          <Modal
+            isOpen={editingItem !== null}
+            onClose={handleClose}
+          >
+            <h2 className="text-lg font-semibold mb-4">
+              Edit Item
+            </h2>
+
+            <Input
+              id="edit-item"
+              label="Item Name"
+              value={editedItemName}
+              onChange={(event) => setEditedItemName(event.target.value)}
+              placeholder="Enter updated item name"
+            />
+
+            <div className="flex justify-end gap-2 mt-5">
+              <Button
+                variant="secondary"
+                onClick={handleClose}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                variant="primary"
+                onClick={handleSave}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </Modal>
         </div>
       </div>
     </section>
