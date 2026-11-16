@@ -1,5 +1,6 @@
 
 import type { Task } from "./TaskList";
+import Button from "./ui/button";
 
 // Component props
 type TaskItemProps = {
@@ -9,7 +10,13 @@ type TaskItemProps = {
   onEdit: (taskId: number, newTitle: string) => void;
 };
 
-function TaskItem({ task, onToggle, onDelete, onEdit }: TaskItemProps) {
+function TaskItem({
+  task,
+  onToggle,
+  onDelete,
+  onEdit,
+}: TaskItemProps) {
+
   function handleEdit(): void {
     const newTitle = window.prompt(
       "Edit your task:",
@@ -25,46 +32,51 @@ function TaskItem({ task, onToggle, onDelete, onEdit }: TaskItemProps) {
     onEdit(task.id, trimmedTitle);
   }
 
-  
-return (
-  <div className="flex items-center justify-between gap-3 px-1 py-[15px] border-b border-[#e2e8f0] dark:border-[#475569]">
+  return (
+    <div className="flex items-center justify-between gap-3 px-1 py-[15px] border-b border-[#e2e8f0] dark:border-[#475569]">
 
-    <label className="flex items-center gap-[10px] min-w-0 cursor-pointer">
-      <input
-        type="checkbox"
-        className="!w-[17px] !h-[17px] !p-0 shrink-0 accent-[#2563eb]"
-        checked={task.completed}
-        onChange={() => onToggle(task.id)}
-      />
+      <label className="flex items-center gap-[10px] min-w-0 cursor-pointer">
 
-      <span
-        className={`[overflow-wrap:anywhere] ${
-          task.completed ? "line-through text-[#94a3b8]" : ""
-        }`}
-      >
-        {task.title}
-      </span>
-    </label>
+        <input
+          type="checkbox"
+          className="!w-[17px] !h-[17px] !p-0 shrink-0 accent-[#2563eb]"
+          checked={task.completed}
+          onChange={() => onToggle(task.id)}
+        />
 
-    <div className="flex gap-[7px] shrink-0 max-[650px]:flex-col">
-      <button
-        type="button"
-        className="bg-transparent border border-[#cbd5e1] rounded-[6px] px-[9px] py-[6px] text-[12px] dark:text-[#e2e8f0] dark:border-[#64748b]"
-        onClick={handleEdit}
-      >
-        Edit
-      </button>
+        <span
+          className={`[overflow-wrap:anywhere] ${task.completed
+              ? "line-through text-[#94a3b8]"
+              : ""
+            }`}
+        >
+          {task.title}
+        </span>
 
-      <button
-        type="button"
-        className="bg-transparent border border-[#cbd5e1] rounded-[6px] px-[9px] py-[6px] text-[12px] text-[#dc2626]"
-        onClick={() => onDelete(task.id)}
-      >
-        Delete
-      </button>
+      </label>
+
+      <div className="flex gap-[7px] shrink-0 max-[650px]:flex-col">
+
+
+        <Button
+          variant="secondary"
+          size="small"
+          onClick={handleEdit}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="danger"
+          size="small"
+          onClick={() => onDelete(task.id)}
+        >
+          Delete
+        </Button>
+
+      </div>
+
     </div>
-  </div>
-);
+  );
 }
 
 export default TaskItem;
