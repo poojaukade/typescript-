@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
+import Input from "./ui/Input";
 
 // Component props
 type TaskFormProps = {
@@ -39,15 +40,22 @@ function TaskForm({ onAdd }: TaskFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-[10px] max-[650px]:flex-col">
-        <input
+      <div className="flex gap-[10px] max-[650px]:flex-col mb-3 items-end">
+        {/* <input
         className="w-full border border-[#cbd5e1] rounded-[7px] px-3 py-[11px] outline-none bg-white text-[#172b4d] focus:border-[#2563eb] focus:shadow-[0_0_0_3px_rgba(37,99,235,0.1)] dark:bg-[#334155] dark:text-white dark:border-[#64748b] dark:placeholder:text-[#cbd5e1]"
           type="text"
           value={task}
           onChange={handleChange}
           placeholder="Enter a new task..."
-        />
-
+        /> */}
+<Input
+type="text"
+label="New Task"
+    id="new-task"
+    value={task}
+    onChange={handleChange}
+    placeholder="Enter the task"
+  />
         <button type="submit" 
         className="border-0 rounded-[7px] px-[18px] py-[11px] bg-[#2563eb] text-white font-semibold whitespace-nowrap hover:bg-[#1d4ed8]"
           >

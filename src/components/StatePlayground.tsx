@@ -2,6 +2,7 @@
 import { useState } from "react";
 import type { ChangeEvent } from "react";
 import Button from "./ui/button";
+import Input from "./ui/Input";
 // Component props
 type StatePlaygroundProps = {
   darkMode: boolean;
@@ -177,21 +178,24 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
 >
           <h3 className="text-[16px] mb-[15px]">Array State Practice</h3>
 
-          <div className="flex gap-2 mb-3">
-            <input
-             className="min-w-0 flex-1"
-              value={newItem}
-              onChange={handleInputChange}
-              placeholder="Enter an item"
-            />
+       <div className="flex gap-3 mb-3 items-end">
+  <Input
+    id="new-item"
+    label="New Item"
+    value={newItem}
+    onChange={handleInputChange}
+    placeholder="Enter item name"
+  />
 
-            <button 
-            type="button" 
-             className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
-            onClick={handleAddItem}>
-              Add
-            </button>
-          </div>
+  <Button
+    variant="primary"
+    size="medium"
+    className="shrink-0 self-end"
+    onClick={handleAddItem}
+  >
+    Add
+  </Button>
+</div>
 
           {items.map((item) => (
             <div className="flex items-center justify-between gap-[10px] border-t border-[#e2e8f0] py-[10px] text-sm"
