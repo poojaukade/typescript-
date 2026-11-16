@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import type { ChangeEvent } from "react";
-
+import Button from "./ui/button";
 // Component props
 type StatePlaygroundProps = {
   darkMode: boolean;
@@ -199,21 +199,28 @@ function StatePlayground({ darkMode, onToggleTheme }: StatePlaygroundProps) {
               <span>{item.name}</span>
 
               <div className="flex flex-wrap gap-[7px]">
-                <button
+                {/* <button
                   type="button"
                   className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
                   onClick={() => handleEditItem(item.id)}
                 >
                   Edit
-                </button>
+                </button> */}
+                 <Button
+          variant="primary"
+          size="small"
+          onClick={() => handleEditItem(item.id)}
+        >
+          Edit
+        </Button>
 
-                <button
-                  type="button"
-                  className="border-0 bg-[#eaf0ff] text-[#2454b8] rounded-[6px] px-3 py-2 text-[13px] font-semibold hover:bg-[#dce7ff]"
-                  onClick={() => handleDeleteItem(item.id)}
-                >
-                  Delete
-                </button>
+                <Button
+          variant="primary"
+          size="small"
+          onClick={() => handleDeleteItem(item.id)}
+        >
+          Delete
+        </Button>
               </div>
             </div>
           ))}
